@@ -9,8 +9,14 @@
 (add-record (make-cd "Fly" "Dixie Chicks" 8 t))
 (add-record (make-cd "Home" "Dixie Chicks" 9 t))
 
+#|
+(defun dump-db()
+  (dolist (cd *db*)
+    (format t "~{~a:~10t~a~%~}~%" cd)))
+|#
+
 (defun dump-db ()
-  (format t "~{~{~a:~10t~a~%~}~%~}" *db*))
+ (format t "~{~{~a:~10t~a~%~}~%~}" *db*))
 
 (defun prompt-read (prompt)
   (format *query-io* "~a: " prompt)
@@ -43,7 +49,6 @@
   (with-open-file (in filename)
     (with-standard-io-syntax
       (setf *db* (read in)))))
-
 
 
 ;; Querying the Database
@@ -92,6 +97,11 @@
 
 
 ;; Removing Duplication and Winning Big
+
+#|
+(defun make-comparison-expr (field value)    ; wrong
+  (list equal (list getf cd field) value))
+|#
 
 (defun make-comparison-expr (field value)
   `(equal (getf cd ,field) ,value))
